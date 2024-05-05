@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './BenefitsSection.css';
 
 const BenefitsSection = () => {
     const [currentBenefit, setCurrentBenefit] = useState(0);
     const benefits = ['Benefit1', 'Benefit2', 'Benefit3'];
+
+    const handleNextBenefit = useCallback(() => {
+        setCurrentBenefit((currentBenefit + 1) % benefits.length);
+    }, []);
 
     // Handle automatic sliding
     useEffect(() => {
@@ -12,14 +16,10 @@ const BenefitsSection = () => {
         }, 3000); // Change slides every 3000 milliseconds (3 seconds)
         
         return () => clearTimeout(timer); // Clear the timer when the component unmounts or updates
-    }, [currentBenefit]); // Dependency array to re-run the effect when currentBenefit changes
+    }, [currentBenefit, handleNextBenefit]); // Dependency array to re-run the effect when currentBenefit changes
 
     const handlePrevBenefit = () => {
         setCurrentBenefit((currentBenefit - 1 + benefits.length) % benefits.length);
-    };
-
-    const handleNextBenefit = () => {
-        setCurrentBenefit((currentBenefit + 1) % benefits.length);
     };
 
     return (
