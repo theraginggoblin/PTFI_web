@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './BenefitsSection.css';
 
 const BenefitsSection = () => {
     const [currentBenefit, setCurrentBenefit] = useState(0);
     const benefits = ['Benefit1', 'Benefit2', 'Benefit3'];
-    const handleNextBenefit = () => {
+
+    const handleNextBenefit = useCallback(() => {
         setCurrentBenefit((currentBenefit + 1) % benefits.length);
-    };
+    }, []);
+
     // Handle automatic sliding
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -19,8 +21,6 @@ const BenefitsSection = () => {
     const handlePrevBenefit = () => {
         setCurrentBenefit((currentBenefit - 1 + benefits.length) % benefits.length);
     };
-
-
 
     return (
         <section className="benefits">
